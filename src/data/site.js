@@ -5,7 +5,7 @@ export const SITE = {
   url: "https://www.gemgovadvisors.com",
   description:
     "GeM Advisor helps Indian businesses with GeM registration, government tender search, bid preparation, catalogue management and procurement advisory services.",
-  phone: "+91 70166 28865",
+  phone: "+91 70166 66666",
   whatsapp: "916204498292",
   email: "gem@gemgovadvisors.com",
   hours: "Monday to Saturday, 9:00 AM to 6:30 PM IST",
