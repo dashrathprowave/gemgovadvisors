@@ -10,6 +10,14 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Dependencies and generated output — linting them reports build artefacts
+    // as errors and makes `npm run lint` useless.
+    "node_modules/**",
+    "deploy/**",
+    ".next-standalone/**",
+    // Stored customer submissions (personal data) and their CSV exports.
+    "data/**",
+    "exports/**",
   ]),
 ]);
 

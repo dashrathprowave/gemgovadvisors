@@ -1,49 +1,106 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "./compiled-tailwind.css";
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Brand palette.
+
+   compiled-tailwind.css ships a set of theme classes (.green, .blue, .dark, ...)
+   that each set --bg/--text/--border/--fill-{primary..quaternary}. Those variables
+   feed the bg-primary / text-secondary / border-primary utilities. Redefining them
+   here — including on .dark, which sits on <html> and would otherwise cascade grey
+   over everything — pins the whole site to the light-orange brand.
+--------------------------------------------------------------------------- */
+:root,
+.green,
+.orange,
+.dark {
+  --bg-quaternary: 255, 247, 237;
+  --bg-tertiary: 251, 191, 131;
+  --bg-secondary: 248, 134, 43;
+  --bg-primary: 238, 108, 15;
+  --text-quaternary: 255, 247, 237;
+  --text-tertiary: 251, 191, 131;
+  --text-secondary: 238, 108, 15;
+  --text-primary: 198, 84, 14;
+  --border-quaternary: 255, 247, 237;
+  --border-tertiary: 251, 191, 131;
+  --border-secondary: 248, 134, 43;
+  --border-primary: 238, 108, 15;
+  --fill-quaternary: 255, 247, 237;
+  --fill-tertiary: 251, 191, 131;
+  --fill-secondary: 248, 134, 43;
+  --fill-primary: 238, 108, 15;
 }
 
 html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-padding-top: 130px;
 }
 
 body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: Mulish, Arial, sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+.dark {
+  color-scheme: dark;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* The decorative dotted shape in the template was hard-coded green. */
+.bg-shape-one {
+  background-image: radial-gradient(#f8862b 10%, transparent 11%),
+    radial-gradient(#f8862b 10%, transparent 11%);
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* ---- component classes shared across pages ---- */
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-secondary px-6 py-3 text-base font-semibold leading-none text-white no-underline transition-colors duration-200 hover:bg-primary;
   }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-solid border-brand-500 bg-transparent px-6 py-3 text-base font-semibold leading-none text-brand-600 no-underline transition-colors duration-200 hover:bg-brand-50 dark:hover:bg-brand-900/20;
+  }
+
+  .shell {
+    @apply container mx-auto px-5 sm:px-8 lg:px-0 lg:w-5/6 2xl:w-3/5;
+  }
+
+  .field {
+    @apply h-11 w-full rounded-lg border-1 border-solid border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 outline-none transition-colors hover:border-brand-500 focus:border-brand-500 dark:border-gray-700 dark:bg-[#0E1A2B] dark:text-gray-100;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-xs font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400;
+  }
+
+  .prose-block p {
+    @apply mb-4 text-base leading-relaxed text-slate-600 dark:text-gray-300;
+  }
+
+  .prose-block h2 {
+    @apply mb-4 mt-10 font-heading text-2xl font-bold text-darkIndigo-900 dark:text-white;
+  }
+
+  .prose-block h3 {
+    @apply mb-3 mt-8 font-heading text-xl font-semibold text-darkIndigo-900 dark:text-white;
+  }
+
+  .prose-block ul {
+    @apply mb-4 list-disc space-y-2 pl-5 text-base leading-relaxed text-slate-600 dark:text-gray-300;
+  }
+}
+
+/* ---- supplementary utilities not present in the reused compiled CSS ---- */
+.landingComp,
+.parallax-wrap,
+.navbar-expand-lg {
+  display: block;
+}
+.shadow-inner {
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+}
+.after\:rounded-50\%::after {
+  border-radius: 50%;
 }

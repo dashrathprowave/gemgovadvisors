@@ -30,11 +30,20 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files — real credentials never get committed, but the template does
 .env*
+!.env.example
 
 # vercel
 .vercel
+
+# lead submissions — these hold customer personal data, keep them out of git
+/data/
+/exports/
+
+# built deployment bundle
+/deploy/
+/deploy.tar.gz
 
 # typescript
 *.tsbuildinfo
