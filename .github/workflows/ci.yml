@@ -1,0 +1,114 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [master]
+    tags: ["v*"]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+# One run per ref at a time; never cancel a deploy that is mid-extract.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+
+jobs:
+  test:
+    name: Lint, test, build, smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Production build
+        run: npm run build
+
+      - name: Smoke test
+        run: npm run smoke
+
+      - name: Build deployment bundle
+        if: github.event_name == 'push'
+        run: node scripts/build-bundle.mjs
+
+      - name: Keep bundle for the deploy job
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-bundle
+          path: deploy.tar.gz
+          retention-days: 1
+          if-no-files-found: error
+
+  deploy:
+    name: Deploy to VPS
+    needs: test
+    # Pushes to master (and version tags) deploy; pull requests only test.
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v'))
+    runs-on: ubuntu-latest
+    env:
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USER: ${{ secrets.VPS_USER }}
+      VPS_PORT: ${{ secrets.VPS_PORT }}
+      VPS_PATH: ${{ secrets.VPS_PATH }}
+      SITE_URL: ${{ secrets.SITE_URL }}
+    steps:
+      - name: Download the bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: deploy-bundle
+
+      - name: Set up SSH
+        env:
+          SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "$VPS_PORT" "$VPS_HOST" >> ~/.ssh/known_hosts
+
+      - name: Upload the bundle
+        run: |
+          scp -i ~/.ssh/deploy_key -P "$VPS_PORT" -o BatchMode=yes \
+            deploy.tar.gz "$VPS_USER@$VPS_HOST:$VPS_PATH/"
+
+      - name: Extract on the VPS and restart the app
+        run: |
+          ssh -i ~/.ssh/deploy_key -p "$VPS_PORT" -o BatchMode=yes "$VPS_USER@$VPS_HOST" \
+            "set -e
+             cd '$VPS_PATH'
+             if [ -d .next ]; then rm -rf .next-prev; cp -r .next .next-prev; fi
+             rm -rf .next
+             tar -xzf deploy.tar.gz
+             rm -f deploy.tar.gz
+             pkill -f '[n]ode.*start\.js' || true
+             pkill -f '[n]pm start' || true
+             pkill -f '[n]ode.*server\.js' || true
+             exit 0"
+
+      - name: Health check
+        run: |
+          echo "Waiting for $SITE_URL ..."
+          for attempt in $(seq 1 20); do
+            code=$(curl -sSL -o /dev/null -w '%{http_code}' --max-time 10 "$SITE_URL/" || true)
+            echo "attempt $attempt: HTTP ${code:-000}"
+            if [ "$code" = "200" ]; then
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "::error::Site did not answer 200 from $SITE_URL"
+          exit 1

@@ -1,3 +1,7 @@
+# GeM Advisor
+
+[![CI/CD](https://github.com/dashrathprowave/gemgovadvisors/actions/workflows/ci.yml/badge.svg)](https://github.com/dashrathprowave/gemgovadvisors/actions/workflows/ci.yml)
+
 GeM Advisor — a multi-page marketing site for a GeM and government tender
 consultancy, built on Next.js 16 (App Router). The visual system is inherited
 from the myscheme-clone project (`src/app/compiled-tailwind.css` is reused
@@ -11,6 +15,23 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
+
+## Testing and CI/CD
+
+```bash
+npm test        # unit tests — seo, site data, submissions fallback, env loader
+npm run lint    # eslint
+npm run build   # production build (27 routes)
+npm run smoke   # starts the built site on :3100 and checks 12 routes
+```
+
+Every push to `master` runs lint → tests → build → smoke on GitHub Actions and,
+if all pass, deploys `deploy.tar.gz` to the VPS with a health check. Pull
+requests run the tests only. Releases are marked with `npm version` tags and
+`npm run changelog`.
+
+Full runbook: [CI-CD-STEPS.md](./CI-CD-STEPS.md) · Pipeline reference:
+[DEPLOY.md](./DEPLOY.md)
 
 ## Pages
 
