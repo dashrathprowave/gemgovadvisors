@@ -1,13 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { ArrowRightLongIcon, CheckCircleIcon } from "./Icons";
-import { SERVICES, SITE } from "@/data/site";
+import { useRouter } from "next/navigation";
+import { SERVICES } from "@/data/site";
 
 export default function LeadForm() {
+  const router = useRouter();
   const [status, setStatus] = useState("idle");
-  const [name, setName] = useState("");
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -20,52 +19,16 @@ export default function LeadForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      setStatus(res.ok ? "sent" : "error");
       if (res.ok) {
-        setName(String(data.name || "").split(" ")[0] || "");
-        form.reset();
+        const name = encodeURIComponent(String(data.name || "").split(" ")[0] || "");
+        router.push(`/contact/thank-you?name=${name}`);
+        return;
       }
+      setStatus("error");
     } catch {
       setStatus("error");
     }
   };
-
-  if (status === "sent") {
-    return (
-      <div
-        role="status"
-        className="rounded-xl bg-white p-8 text-center shadow-xl dark:bg-[#0E1A2B] sm:p-10"
-      >
-        <span className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-brand-100 text-brand-600 dark:bg-brand-900/40 dark:text-brand-400">
-          <CheckCircleIcon className="h-9 w-9" />
-        </span>
-        <h3 className="m-0 mb-3 font-heading text-2xl font-bold text-darkIndigo-900 dark:text-white">
-          {name ? `Thank you, ${name}!` : "Thank you!"}
-        </h3>
-        <p className="m-0 text-base leading-relaxed text-slate-600 dark:text-gray-300">
-          Your message has reached our team. An advisor will go through it and{" "}
-          <strong className="text-darkIndigo-900 dark:text-white">get back to you within one working day</strong>.
-        </p>
-        <p className="mt-3 text-sm leading-relaxed text-slate-500 dark:text-gray-400">
-          Working on a deadline this week? Call us on{" "}
-          <a href={`tel:${SITE.phone.replace(/\s/g, "")}`} className="font-semibold text-brand-600 no-underline">
-            {SITE.phone}
-          </a>{" "}
-          and mention your enquiry.
-        </p>
-
-        <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-          <Link href="/register" className="btn-primary">
-            Register Your Business
-            <ArrowRightLongIcon className="w-4" />
-          </Link>
-          <button type="button" onClick={() => setStatus("idle")} className="btn-outline">
-            Send Another Message
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <form onSubmit={onSubmit} className="rounded-xl bg-white p-6 shadow-xl dark:bg-[#0E1A2B] sm:p-8">
