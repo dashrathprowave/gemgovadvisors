@@ -154,6 +154,9 @@ jobs:
           host: ${{ secrets.STAGING_VPS_HOST }}
           username: ${{ secrets.STAGING_VPS_USER }}
           key: ${{ secrets.STAGING_VPS_SSH_KEY }}
+          # First backend boot downloads ~3 GB of ML models — the default
+          # 10-minute SSH timeout kills the session mid-download.
+          command_timeout: 30m
 
           script: |
             set -e
