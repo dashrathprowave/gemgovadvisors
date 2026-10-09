@@ -50,7 +50,7 @@ export default function Settings() {
         </div>
         <div className="panel-pad">
           <p className="muted" style={{ marginBottom: 12 }}>
-            Clear the saved admin username + password in this browser. You'll need both again to log back in.
+            Clear the saved admin username + password in this browser. You&apos;ll need both again to log back in.
           </p>
           <button
             className="danger"

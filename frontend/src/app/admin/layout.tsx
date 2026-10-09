@@ -43,9 +43,16 @@ export function AdminProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    const hasCreds = hasCredentials();
-    setAuthed(hasCreds);
-    setChecking(false);
+    // Read session credentials after mount (sessionStorage doesn't exist
+    // during SSR). Async callback on purpose: external browser state being
+    // synced into React, not derived render state.
+    let cancelled = false;
+    Promise.resolve().then(() => {
+      if (cancelled) return;
+      setAuthed(hasCredentials());
+      setChecking(false);
+    });
+    return () => { cancelled = true; };
   }, []);
 
   async function tryLogin() {

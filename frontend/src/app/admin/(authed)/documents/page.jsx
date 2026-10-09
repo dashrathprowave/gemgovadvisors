@@ -135,7 +135,7 @@ export default function Documents() {
   return (
     <div>
       <h1>Documents</h1>
-      <p className="page-desc">Upload files or add text content — they're chunked and embedded for retrieval.</p>
+      <p className="page-desc">Upload files or add text content — they&apos;re chunked and embedded for retrieval.</p>
 
       <div className="upload-bar">
         <input

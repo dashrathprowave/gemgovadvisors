@@ -40,7 +40,7 @@ export default function Overview() {
   return (
     <div>
       <h1>Overview</h1>
-      <p className="page-desc">Your RAG assistant's activity over the last 24 hours.</p>
+      <p className="page-desc">Your RAG assistant&apos;s activity over the last 24 hours.</p>
 
       <div className="stat-grid">
         <StatCard icon={<IconDashboard size={17} />} tone="indigo" label="Unique Users" value={stats?.unique_users} />
