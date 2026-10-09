@@ -2,16 +2,16 @@ name: CI/CD
 
 on:
   push:
-    branches: [master, staging]
+    branches: [develop, develop]
     tags: ["v*"]
   pull_request:
-    branches: [master]
+    branches: [develop]
   workflow_dispatch:
 
 # One run per ref at a time; never cancel a deploy that is mid-extract.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/develop' }}
 
 jobs:
   test:
@@ -41,11 +41,11 @@ jobs:
         run: npm run smoke
 
       - name: Build deployment bundle
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         run: node scripts/build-bundle.mjs
 
       - name: Keep bundle for the deploy job
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         uses: actions/upload-artifact@v4
         with:
           name: deploy-bundle
@@ -61,7 +61,7 @@ jobs:
   #   name: Deploy Frontend to Staging VPS
   #   needs: test
 
-  #   if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+  #   if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
 
   #   runs-on: ubuntu-latest
 
@@ -78,10 +78,10 @@ jobs:
 
   #           cd "/var/www/e390b8b3-078c-4b25-9f4b-294a2930f348/public_html"
 
-  #           echo "Pulling latest master branch..."
+  #           echo "Pulling latest develop branch..."
   #           git fetch origin
-  #           git checkout master
-  #           git reset --hard origin/master
+  #           git checkout develop
+  #           git reset --hard origin/develop
 
   #           echo "Installing dependencies..."
   #           npm install
@@ -104,7 +104,7 @@ jobs:
     name: Deploy to VPS
     needs: test
 
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v'))
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/tags/v'))
 
     runs-on: ubuntu-latest
 
@@ -123,8 +123,8 @@ jobs:
 
             echo "Pulling latest production code..."
             git fetch origin
-            git checkout master
-            git reset --hard origin/master
+            git checkout develop
+            git reset --hard origin/develop
 
             echo "Installing dependencies..."
             npm install
