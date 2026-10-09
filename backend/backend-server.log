@@ -169,3 +169,33 @@ INFO:     127.0.0.1:50106 - "GET /health HTTP/1.1" 200 OK
 INFO:     127.0.0.1:50106 - "GET /v1/models HTTP/1.1" 404 Not Found
 INFO:     127.0.0.1:53653 - "GET /health HTTP/1.1" 200 OK
 INFO:     127.0.0.1:53653 - "GET /v1/models HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56072 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56072 - "GET /v1/models HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52637 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52637 - "GET /v1/models HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64704 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64704 - "GET /v1/models HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57531 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57531 - "GET /v1/models HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61420 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61420 - "GET /v1/models HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49295 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49295 - "GET /v1/models HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52895 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52895 - "GET /v1/models HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53742 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53742 - "GET /v1/models HTTP/1.1" 404 Not Found
+INFO:     ::1:0 - "GET /api/admin/storage HTTP/1.1" 200 OK
+INFO:     ::1:0 - "GET /api/admin/metrics/overview HTTP/1.1" 200 OK
+INFO:     ::1:0 - "GET /api/admin/metrics/latency HTTP/1.1" 200 OK
+INFO:     ::1:0 - "GET /api/admin/metrics/timeseries HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62577 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62577 - "GET /v1/models HTTP/1.1" 404 Not Found
+2026-10-09 16:04:39 [INFO] httpx: HTTP Request: GET https://api.groq.com/openai/v1/models "HTTP/1.1 200 OK"
+INFO:     ::1:0 - "GET /api/admin/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62602 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62602 - "GET /v1/models HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61171 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61171 - "GET /v1/models HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53683 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53683 - "GET /v1/models HTTP/1.1" 404 Not Found

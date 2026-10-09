@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, createContext, useContext } from "react";
-import type { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -24,9 +23,9 @@ const NAV = [
   { to: "/admin/settings", label: "Settings", icon: IconSettings },
 ];
 
-const AdminContext = createContext<any>(null);
+const AdminContext = createContext(null);
 
-export function AdminProvider({ children }: { children: ReactNode }) {
+export function AdminProvider({ children }) {
   const [authed, setAuthed] = useState(false);
   const [checking, setChecking] = useState(true);
   const [username, setUsername] = useState("");
@@ -100,7 +99,7 @@ export function useAdmin() {
   return ctx;
 }
 
-export default function AdminLayout({ children }: { children: ReactNode }) {
+export default function AdminLayout({ children }) {
   return (
     <AdminProvider>
       <div className="admin-root">
@@ -110,7 +109,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   );
 }
 
-function AdminShell({ children }: { children: ReactNode }) {
+function AdminShell({ children }) {
   const {
     authed, checking, username, setUsername, password, setPassword,
     error, checkingLogin, navOpen, setNavOpen, closeNav, tryLogin, handleLogout,
@@ -168,7 +167,7 @@ function AdminShell({ children }: { children: ReactNode }) {
       <div className="mobile-topbar">
         <button
           className="hamburger"
-          onClick={() => setNavOpen((o: boolean) => !o)}
+          onClick={() => setNavOpen((o) => !o)}
           aria-label={navOpen ? "Close menu" : "Open menu"}
         >
           {navOpen ? "✕" : "☰"}

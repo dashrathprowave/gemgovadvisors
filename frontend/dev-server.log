@@ -172,3 +172,114 @@ Parsing ecmascript source code failed
  GET /api/admin/metrics/timeseries?hours=24&bucket=hour 200 in 251ms (next.js: 32ms, application-code: 219ms)
  GET /api/admin/health 200 in 6.3s (next.js: 39ms, application-code: 6.2s)
  GET /api/admin/storage 200 in 37ms (next.js: 10ms, application-code: 27ms)
+⚠ Fast Refresh had to perform a full reload when ./src/app/admin/layout.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+✓ Compiled in 104ms
+ GET /admin/overview 200 in 137ms (next.js: 28ms, application-code: 109ms)
+ GET /admin/overview 200 in 59ms (next.js: 5ms, application-code: 55ms)
+ GET /api/admin/storage 200 in 67ms (next.js: 23ms, application-code: 43ms)
+ GET /api/admin/metrics/timeseries?hours=24&bucket=hour 200 in 45ms (next.js: 13ms, application-code: 32ms)
+ GET /api/admin/metrics/overview?hours=24 200 in 50ms (next.js: 6ms, application-code: 44ms)
+ GET /api/admin/metrics/latency?hours=24 200 in 85ms (next.js: 8ms, application-code: 77ms)
+ GET /api/admin/health 200 in 8.4s (next.js: 12ms, application-code: 8.4s)
+ GET /admin 200 in 78ms (next.js: 21ms, application-code: 57ms)
+ GET / 200 in 289ms (next.js: 7ms, application-code: 283ms)
+⨯ ./src/components/admin/icons.jsx:1:6
+Error: Expected ';', '}' or <eof>
+[31m[1m>[0m [90m1 |[0m [36mtype[0m [33mIconProps[0m = { size?: number; className?: string };
+  [90m  |[0m      [31m[1m^^^^^^^^^[0m
+  [90m2 |[0m
+  [90m3 |[0m [36mfunction[0m base(size: number, className?: string) {
+  [90m4 |[0m   [36mreturn[0m {
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./src/components/admin/icons.jsx [Client Component Browser]
+    ./src/app/admin/(authed)/overview/page.jsx [Client Component Browser]
+    ./src/app/admin/(authed)/overview/page.jsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./src/components/admin/icons.jsx [Client Component Browser]
+    ./src/app/admin/layout.jsx [Client Component Browser]
+    ./src/app/admin/layout.jsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./src/components/admin/icons.jsx [Client Component SSR]
+    ./src/app/admin/(authed)/overview/page.jsx [Client Component SSR]
+    ./src/app/admin/(authed)/overview/page.jsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./src/components/admin/icons.jsx [Client Component SSR]
+    ./src/app/admin/layout.jsx [Client Component SSR]
+    ./src/app/admin/layout.jsx [Server Component]
+
+
+ GET /admin/overview 500 in 2.3s (next.js: 1947ms, application-code: 304ms)
+⨯ ./src/components/admin/icons.jsx:1:6
+Error: Expected ';', '}' or <eof>
+[31m[1m>[0m [90m1 |[0m [36mtype[0m [33mIconProps[0m = { size?: number; className?: string };
+  [90m  |[0m      [31m[1m^^^^^^^^^[0m
+  [90m2 |[0m
+  [90m3 |[0m [36mfunction[0m base(size: number, className?: string) {
+  [90m4 |[0m   [36mreturn[0m {
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./src/components/admin/icons.jsx [Client Component Browser]
+    ./src/app/admin/(authed)/overview/page.jsx [Client Component Browser]
+    ./src/app/admin/(authed)/overview/page.jsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./src/components/admin/icons.jsx [Client Component Browser]
+    ./src/app/admin/layout.jsx [Client Component Browser]
+    ./src/app/admin/layout.jsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./src/components/admin/icons.jsx [Client Component SSR]
+    ./src/app/admin/(authed)/overview/page.jsx [Client Component SSR]
+    ./src/app/admin/(authed)/overview/page.jsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./src/components/admin/icons.jsx [Client Component SSR]
+    ./src/app/admin/layout.jsx [Client Component SSR]
+    ./src/app/admin/layout.jsx [Server Component]
+
+
+ GET /admin/overview 500 in 26ms (next.js: 11ms, application-code: 15ms)
+[browser] Uncaught Error: ./src/components/admin/icons.jsx:1:6
+Error: Expected ';', '}' or <eof>
+> 1 | type IconProps = { size?: number; className?: string };
+    |      ^^^^^^^^^
+  2 |
+  3 | function base(size: number, className?: string) {
+  4 |   return {
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Client Component Browser:
+    ./src/components/admin/icons.jsx [Client Component Browser]
+    ./src/app/admin/layout.jsx [Client Component Browser]
+    ./src/app/admin/layout.jsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/admin/icons.jsx [Client Component SSR]
+    ./src/app/admin/layout.jsx [Client Component SSR]
+    ./src/app/admin/layout.jsx [Server Component]
+
+
+    at <unknown> (Error: ./src/components/admin/icons.jsx:1:6)
+    at <unknown> (Error: (./src/components/admin/icons.jsx:1:6)
+ GET /admin/overview 200 in 97ms (next.js: 28ms, application-code: 68ms)
+ GET /api/admin/storage 200 in 54ms (next.js: 18ms, application-code: 36ms)
+ GET /api/admin/metrics/overview?hours=24 200 in 63ms (next.js: 9ms, application-code: 53ms)
+ GET /api/admin/metrics/latency?hours=24 200 in 45ms (next.js: 9ms, application-code: 36ms)
+ GET /api/admin/metrics/timeseries?hours=24&bucket=hour 200 in 99ms (next.js: 16ms, application-code: 83ms)
+ GET /api/admin/health 200 in 6.8s (next.js: 25ms, application-code: 6.8s)
+ GET / 200 in 241ms (next.js: 6ms, application-code: 235ms)
+ GET /admin 200 in 85ms (next.js: 36ms, application-code: 49ms)
+ GET /admin/overview 200 in 55ms (next.js: 4ms, application-code: 51ms)
+ GET /admin/documents 200 in 77ms (next.js: 22ms, application-code: 55ms)
