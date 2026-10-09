@@ -1,0 +1,36 @@
+{
+  "name": "gemgovadvisor-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "node --test --import ./tests/setup-alias.mjs \"tests/**/*.test.mjs\"",
+    "smoke": "node scripts/smoke.mjs",
+    "changelog": "node scripts/changelog.mjs",
+    "db:setup": "node scripts/db-setup.mjs",
+    "db:check": "node scripts/db-check.mjs",
+    "db:export": "node scripts/db-export.mjs",
+    "bundle": "next build && node scripts/build-bundle.mjs",
+    "mail:test": "node scripts/mail-test.mjs"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.104.1",
+    "mysql2": "^3.24.2",
+    "next": "16.3.3",
+    "nodemailer": "^9.0.6",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "recharts": "^2.15.3"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "autoprefixer": "^10.5.4",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.3",
+    "postcss": "^8.5.26",
+    "tailwindcss": "^3.4.19"
+  }
+}

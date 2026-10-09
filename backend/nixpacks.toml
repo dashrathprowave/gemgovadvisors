@@ -1,0 +1,39 @@
+# Nixpacks configuration for Railway (no Docker) - optimized for low memory
+[phases.setup]
+nixPkgs = [
+  "python312",
+  "python312Packages.pip",
+  "python312Packages.virtualenv",
+  "gcc",
+  "libpq",
+  "mysql-client",
+  "openssl",
+  "pkg-config",
+  "curl",
+]
+
+[phases.install]
+cmds = [
+  "python -m venv venv",
+  "source venv/bin/activate",
+  # Install torch first with minimal deps to reduce memory spike
+  "pip install --no-cache-dir --no-deps --index-url https://download.pytorch.org/whl/cpu torch",
+  # Install requirements in batches to avoid OOM
+  "pip install --no-cache-dir --no-build-isolation -r requirements.txt",
+]
+
+[phases.build]
+cmds = [
+  "echo 'Build complete'",
+]
+
+[start]
+cmd = "source venv/bin/activate && uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1"
+
+[variables]
+PYTHONUNBUFFERED = "1"
+PYTHONDONTWRITEBYTECODE = "1"
+PIP_NO_CACHE_DIR = "1"
+PIP_CACHE_DIR = "/tmp/pip-cache"
+# Reduce memory usage
+UVICORN_WORKERS = "1"
